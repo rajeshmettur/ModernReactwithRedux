@@ -1,0 +1,61 @@
+
+Section 4:- Structuring Apps with Class-Based Components (33 Min)
+--------------------------------------------------------
+1. Class-Based Components
+	class -> Easier code organization 
+		  -> Can use state (React System) -> Easier to handle user input
+		  -> Understands lifecycle events -> Easier to do things when the app first starts 
+		  
+2. Application Overview
+		if users is northen hemispher between october and march -. Burys Its chilly
+					southern hemisphere and March and October 
+		if users is northen hemispher between March and October  -. Lets hit the beach
+					southern hemisphere and october and march
+	
+	App challenges 
+		-> Need to get the users physical location
+		-> Need to determine the current month
+		-> Need to change text and styling based on location + month 
+
+3. Scaffolding the App
+	create new react project 
+	create 2 files index.js  and SeasonDisplay.js 
+	
+4. Getting a Users Physical Location
+		GeolocationAPI
+	developer.mozilla.org/en-US/docs/Web/API/Geolocation_API
+	
+	const App = () => {
+	window.navigator.geolocation.getCurrentPosition(
+	position => console.log(position),
+	err => console.log(err)
+	);
+	return <div>Hi there!</div>
+	}
+	
+	check console tag position latitude and longitude 
+	if you get error, go to ... sensors tab, go to geolocation and change location san francisco
+	
+5. Resetting Geolocation Preferences
+	chrome -> developer tools -> Settings-> More tools -> Sensors ->  Geolocation -> change location.
+	browser view site information -> location -> Ask Default 
+	reload browser and see pop up notify to allow location -> click deny for resetting.
+	
+6. Handling Async Operations with Functional Components 
+	JS file loaded by browser
+	App component gets created
+	we call geolocation service
+	app returns JSX, gets rendered to page as HTML 
+	... We get result of geolocation.
+	
+7. Refactoring from Functional to Class Components
+	Rules of Class Components
+		-> Must be a Javascript Class
+		-> Must extend (subclass) React.Components
+		-> Must define a render method that returns some amount of JSX 
+	
+	class App extends React.Component{
+	render(){
+	}
+	}
+	copy the return statement and paste it to the render method

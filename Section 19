@@ -1,0 +1,15 @@
+Handling Forms with Redux Form:-
+----------------------------------
+npm install --save redux-form
+
+useful Redux Form Examples:-
+redux-form 
+
+connecting redux form :-
+--------------------------
+import { reducer as formReducer } from 'redux-form'
+
+export default combineReducers({
+form : formReducer
+});
+

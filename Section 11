@@ -1,0 +1,48 @@
+Section 11 :- Let's Test Your React Mastery! (1 Hour 52 Min)
+---------------------------------------------
+1. App Overview 
+2. Component Design 
+3. Scaffolding the App 
+4. Reminder on Event Handlers 
+5. Handling Form Submittal 
+6. Accessing the Youtube API 
+7. Axios 400 Required Parameter part Error 
+8. Searching for Videos 
+9. Adding a Video Type 
+10. Putting it all Together 
+11. Updating State with Fetched Data 
+12. Passing State as Props 
+13. Rendering a List of Videos 
+14. Styling a List 
+15. Communicating from Child to Parent 
+16. Deeply Nested Callbacks 
+		App.js
+	state = { videos : [], selectedVideo : null }
+	onVideoSelect = (video) => {
+		console.log('From the App!', video);
+	}
+	
+	onAppVideoSelect = {this.onVideoSelect}
+	
+	VideoList.js
+	const VideoList = ({videos, onVideoSelect }) => {
+		return <VideoItem onVideoSelect={onVideoSelect} />
+	}
+	
+	VideoItem.js
+	const VideoItem = ({ video, onVideoSelect }) => {
+		return (
+			<div onClick={() => onVideoSelect(video)}
+		)
+	}
+17. Conditional Rendering 
+18. Styling the VideoDetail 
+19. Displaying a Video Player 
+	const videoSrc = `https://www.youtube.com/embed/${video.id.videoId}` + 
+	<iframe src={videoSrc}/>
+20. Fixing a Few Warnings
+		videoList
+		<videoItem key={video.id.videoId}
+	
+21. Defaulting Video Solution 
+		

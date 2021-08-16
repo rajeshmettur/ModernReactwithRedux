@@ -1,0 +1,20 @@
+Navigation with React Router:-
+import { BrowserRouter, Route } from 'react-router-dom';
+
+const PageOne = () => {
+return <div>PageOne</div>;
+}
+
+const PageTwo = () => {
+return <div>PageTwo</div>
+<button>Click Me!</button>
+};
+
+return 
+<div> 
+<BrowserRouter> 
+	<div>
+		<Route path="/" exact component=PageOne} />
+		<Route path="/pagetwo"  component=PageTwo} />
+	</div>
+</BrowserRouter> 

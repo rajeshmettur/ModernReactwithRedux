@@ -1,0 +1,66 @@
+npm install --save redux react-redux
+
+
+index.js
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './components/App';
+
+ReactDOM.render(<App/>, document.querySelector('#root'));
+
+
+const selectedSong = (song) => {
+	type : 'SELECTED_SONG',
+	payload : {
+		song : song
+	}
+};
+
+const songlist = (songlist = [], action) => {
+	return songlist;
+}
+
+const selectedsong = (selectedSong, action) => {
+	if(action.type === 'SELECTED_SONG')
+	{
+		return songlist.filter(song => song != action.payload.song
+	};
+	return songlist;
+}
+
+const store = { createStore, createReducers } from Redux,
+
+const departments = createReducers({
+	songlist : songlist,
+	selectedsong : selectedsong
+});
+
+store.dispatch(selectedsong('Macaranea')); 
+
+
+renderList(){
+	return this.props.songs.map((song) => {
+		return (
+		<div>
+		)
+	});
+}
+
+npm install --save redux react-redux axios redux-thunk
+
+index.js
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider} from 'react-redux';
+import { createStore } from 'redux';
+import App from './compones/App';
+import  reducers  from './reducers';
+
+ReactDOM.render(
+<Provider store = {createStore(reducers)}>
+<App/>
+</Provider>,
+document.querySelector('#root')
+);

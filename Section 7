@@ -1,0 +1,84 @@
+Section 7:- Handling User Input with Forms and Events(1 Hour 16 Min)
+------------------------------------------------------
+1. App Overview
+	How do we get feedback from the user?
+	How do we fetch data from some outside API or server?
+	How do we show lists of records?
+	
+2. Component Design
+	App Challenges
+	 Need to get a search term from the user
+	 Need to use that search term to make a request to an outside API and fetch data.
+	 Need to take the fetched images and show them on the screen in a list
+	
+	App -> SearchBar 
+		-> ImageList 
+		
+3. Adding Some Project Structure
+	create a new file index.js
+	create a new folder components inside create a new file App.js 
+	In index.js, call App component
+	 
+4. Showing Forms to the User
+	refer section7 project
+	
+5. Adding a Touch of Style 
+	refer section7 project
+	
+6. Creating Event Handlers 
+	onInputChange(event){ console.log(event.target.value)};
+	<input type="text" onChange = {this.onInputChange} />
+	refer section7 project
+	
+7. Alternate Event Handler Syntax
+	onChange = { e => this.setState({ term : e.target.value })};
+	
+8. Uncontrolled Vs Controlled Elements 
+	if you are not using state, then its a uncontrolled 
+	if you are using state, get values from state and reset setState then its a controlled element
+	refer section7 project
+	
+9. More on Controlled Elements 
+	 user types in input 
+	 Callback gets invoked 
+	 We call setState with the new value 
+	 Component rerenders 
+	 Input is told what its value is (coming from state)
+	
+10. Handling Form Submittal
+	onFormSumbit(event)
+	{ event.preventDefault(); }
+	console.log(this.state.term); -> this.state throws error 
+	
+11. Understanding this keyword in Javascript
+	stephengrider.github.io/playgrounds/
+	
+12. Solving Context Issues 
+13. Communicating Child to Parent 
+	 step 1: - refactor app to Class based component 
+	 step 2 :- use props to communicate parent to child onSearchSubmit
+	 step 3 :- use the child back method to pass information to parent 
+	 
+	 Parent App Component
+	 use class instead app 
+	 class App extends React.Component {
+		onSearchSubmit(term) { console.log(term);}
+		render() {
+			return <searchBar onSubmit = {this.onSearchSubmit} />
+		}
+	 }
+	 
+	 Child  SearchBar Component
+	 state = { term: '' }; 
+	 onSubmit =(event) => {
+		event.preventDefault();
+		this.props.onSubmit(this.state.term);
+	 }
+	 <form onSubmit={this.OnSubmit} />
+	 
+	 
+	 
+14. Invoking Callbacks in Children 
+
+
+	

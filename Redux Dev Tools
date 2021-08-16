@@ -1,0 +1,15 @@
+github.com/zalmoxisus/redux-devtools-extension
+install chrome webstore
+
+index.js
+import { createStore, applyMiddleware, compose } from 'redux';
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(reducers, composeEnhancers(applyMiddleware()));
+
+<Provider store = {store}>
+
+
+debug sessions with Redux Dev Tools:-
+localhost:3000?debug_session=<some_string>

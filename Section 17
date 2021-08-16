@@ -1,0 +1,283 @@
+Creating OAuth Credentials
+---------------------------
+Create a new project at console.developers.google.com
+set up an OAuth confirmation screen
+Generate an OAuth Client ID
+Install Google's API Library, initialize it with the OAuth Client ID
+Make sure the lib gets called any time the user clicks on the Login with Google button
+
+Client ID 
+942793586610-d8n2brlsldg17qa4sgo0idepfc3f8721.apps.googleusercontent.com
+
+Wiring Up the Google API Library
+--------------------------------
+index.html
+<script src="https://apis.google.com/js/api.js"> </script>
+
+GoogleAuth.js
+create class 
+componentDidMount(){
+window.gapi.load('client:auth2', () => {
+	window.gapi.client.init({
+	clientId:'',
+	scope : 'email'
+	});
+});
+}
+render(){
+return <div>Google Auth</div>;
+}
+import GoogleAuth in Header.js 
+After Link tag use <GoogleAuth/>
+
+developer tool
+gapi
+gapi.load('client:auth2')
+gapi
+gapi.client.init({clientId:'clientid'})
+
+Sending a User into the OAuth Flow:-
+--------------------------------------
+developers.google.com/api-client-library/javascript/reference/referencedocs
+or search google -> gapi documentation
+
+
+
+const auth = gapi.auth2.getAuthInstance()
+auth 
+auth.signIn()
+auth.isSignedIn.get()
+
+Rendering Authentication Status:-
+-----------------------------------------
+Auth Component
+ Get a reference to the auth object after it is initialized
+ Figure out if the user is currently signed in
+ Print their authentication status on the screen
+ 
+ state = { isSignedIn : null };
+ 
+ window.gapiclient.init({
+ }).then(()=>{
+	this.auth = window.gapi.auth2.getAuthInstance();
+	this.setState({ isSignedIn : this.auth.isSignedIn.get() })
+ });
+
+renderAuthButton(){
+	if(this.state.isSignedIn === null) {
+	return <div> I dont know if we are signed in </div>;
+	} else if(this.state.isSignedIn){
+		return <div>I am signed In!</div>
+		}else { return <div>I am not signed In</div>;
+		}
+	}
+	
+	
+}
+
+
+
+render(){
+	return <div>{ this.renderAuthButton() } </div>;
+}
+
+gapi.auth2.getInstance().signOut()
+
+
+Updating Auth State:-
+----------------------
+this.auth.isSignedIn.listen(this.onAuthChange);
+
+onAuthChange =() => {
+this.setState ({ isSignedIn : this.auth.isSignedIn.get() });
+};
+
+Displaying Sign In and Sign Out:
+----------------------------------
+if(isSignedIn === null) {
+
+}
+else if(isSignedIn){
+return (
+<button className = "ui red google button">
+<i className="google icon" />
+Sign Out
+</button>
+)
+}
+else
+{
+return (
+	<button className = "ui red google button">
+	<i className="google icon" />
+	Sign In
+	</button>
+)
+}
+
+On-Demand Sign In and Sign Out:-
+----------------------------------
+onSignIn = () => {
+	this.auth.signIn();
+};
+
+onSignOut = () => {
+	this.auth.signOut();
+};
+
+<button onClick={this.onSignOut}>
+<button onClick={this.onSignIn}
+
+Redux Architecture Design:-
+-----------------------------
+Redux Store -/> Auth State 
+Action Creators -> SignIn() , SignOut()
+Google Auth Component ->
+onSignInClick(), onSignOutClick(),onAuthChange()
+GAPI Auth2 
+
+New approach
+Action Creators -> changeAuth(), trySignIn(), trySigOut() 
+Google Auth :- onSignInClick, onsignOutClick 
+
+Redux Setup:-
+-------------
+npm install --save redux react-redux
+
+src -> actions -> index.js 
+ ->reducers -> index.js 
+import { combineReducers } from 'redux';
+
+export default combineeducers({
+replaceMe:() => 'adsfafaf'
+})
+
+index.js 
+import { Provider} from 'react-redux';
+import { createStore } from 'redux';
+import App from './components/App';
+import reducers from './reducers';
+
+const store = createStore(reducers);
+
+ReactDOM.render(
+<Provider store={store}>
+<App/> </Provider>,
+ document.querySelector('#root')
+);
+)
+
+
+connecting Auth with Action Creators:-
+--------------------------------------
+action index.js
+export const signIn = () => {
+	return {
+		type : 'SIGN_IN'
+	};
+};
+
+
+export const signOut = () => {
+	return {
+		type : 'SIGN_OUT'
+	}
+}
+
+
+GoogleAuth
+IMPORT { CONNECT } FROM 'REACT-REDUX';
+import { signIn, signOut } from '../actions';
+
+export default connect(null, { signIn, signOut} )(GoogleAuth);
+
+onAuthChange = (isSignedIn) =>{
+	if(isSignedIn){ this.props.signIn();}
+	else { this.props.signOut(); }
+}
+
+create new file -> authReducer.js
+
+const INITIAL_STATE = {
+	isSignedIn : null
+}
+export default(state = INITIAL_STATE, action) => {
+	switch(action.type){
+		case 'SIGN_IN':
+			return {...state, isSignedIn: true};
+		case 'SIGN_OUT':
+			return{...state, isSignedIn:false};
+		default:
+			return state;
+	}
+};
+
+reducer/index.js
+import authReducer from './authReducer' 
+export default combineReducers({
+	auth: authReducer
+})
+
+Handling Auth Status through Redux:-
+------------------------------------
+GoogleAuth.js
+
+mapStateToProps = (state) => {
+	return { isSignedIn : state.auth.isSignedIn}
+}
+
+remove state inititalization 
+remove this.setState  and add 
+this.onAuthChange(this.auth.isSignedIn.get());
+
+
+renderAuthButton(){
+change state to props
+}
+
+export default  
+	change null - mapStateToProps
+
+Fixed Action Types:-
+---------------------
+create new file types.js 
+
+export const SIGN_IN = 'SIGN_IN';
+export const SIGN_OUT = 'SIGN_OUT';
+
+ACTION / INDEX.JS
+
+import {SIGN_IN, SIGN_OUT } from './types'
+
+type: SIGN_IN
+
+do it from authReducer
+
+
+Recording the User's ID:-
+-------------------------
+gapi.auth2.getAuthInstance().currentUser.get().getId()
+
+GoogleAuth.js
+onAuthChange () => {
+if(isSignedIn)
+	this.props.signIn(this.auth.currentUser.get().getId())
+}
+
+
+action/index.js
+signIn
+return { type : SIGN_IN,
+payload: userId
+
+
+authReducer.js
+const INITIAL_sTATE = {
+userId:null
+}
+
+export deafu
+case SIGN_IN 
+	REturn userId:action.payload
+CASE SIGN_OUT	
+	RETURN userId: null

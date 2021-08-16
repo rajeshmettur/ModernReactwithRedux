@@ -1,0 +1,180 @@
+Section 6:- Understanding LifeCycle Methods (1 Hour 24 Min)
+--------------------------------------------
+1. Introducing Lifecycle Methods
+	Component LifeCycle ->
+	constructor - 
+	render
+	componentDidMount -> calls one time after render display the content
+	componentDidUpdate -> every time this.setstate update, this componentdidupdate will call. and followed by render method
+	componentWillUnmount -> its like a clean up, will call when the component no longer shown. 
+	
+2. Why Lifecycle Methods
+	Component LifeCycle ->
+		constructor - Good place to do one-time setup.
+		render - Avoid doing anything besides returning JSX
+		componentDidMount -> Good place to do data-loading!
+		componentDidUpdate -> Good place to do more data-loading when state/props change
+		componentWillUnmount -> Good place to do cleanup(especially for non-React stuff)
+	
+	Other LifeCycle methods (rarely used)
+		shouldComponentUpdate 
+		getDrivedStateFromProps 
+		getSnapshotBeforeUpdate
+	
+3. Refactoring Data Loading to Lifecycle Methods
+	Create componentDidMount() and move the window.navigator.geolocation code here.
+	
+4. Alternate State Initialization 
+	instead of using constructor, remove constructor and just used
+	state = { lat: null } by default babel creates a constructor and this.state during compile. 
+	
+5. Passing State as Props
+	index.js
+	import SeasonDisplay from './seasonDisplay'
+	return <SeasonDisplay lat={this.state.lat}/>
+	
+	SeasonDisplay
+	const SeasonDisplay =(props) =>{
+		console.log(props.lat);
+		
+		return <div>Season Display</div>;
+	}
+
+6. Determining Season
+	
+	const getSeason = (lat, month) => {
+	 if(month > 2 && month < 9){
+		return lat > 0 ? 'summer' : 'winter';
+	 } else {
+		return lat > 0 ? 'winter' : 'summer';
+	 }
+	}
+	
+	const SeasonDisplay = props => {
+		const season = getSeason(props.lat, new Date().getMonth());
+		console.log(season);
+		return <div> Season Display </div>;
+	}
+	
+7. Ternary Expressions in JSX
+	return (
+	<div> 
+	<i className = {`${icon} icon`} />
+	<h1>
+	{ season === 'winter' ? 'Burr, it is chilly' : 'Lets hit the beach'}
+	</h1>
+	<i className = {`${icon} icon`} />
+	</div>
+	);
+8. Showing Icons
+	const icon = season === 'winter' ? 'snowflake' : 'sun';
+	
+9. Extracting Options to Config Objects
+	const seasonConfig = {
+		summer : {
+			text : "Let's hit the beach!",
+			iconName : 'sun'
+		},
+		winter : {
+			text : 'Burr it is cold!',
+			iconName : 'snowflake'
+		}
+	};
+	
+	const { text , iconName } = seasonConfig[season];
+	
+	 <div>
+        	<i className = {`${iconName} icon`} />
+            <h1>{text}</h1>
+            <i className = {`${iconName} icon`} />
+      </div>
+	
+10. Adding Some Styling
+	 <i className = {`massive ${iconName} icon`} />
+
+	create new file SeasonDisplay.css
+	.icon-left{
+		position : absolute;
+		top : 10px;
+		left:10px;
+	}
+	.icon-right {
+		position : absolute;
+		bottom : 10px;
+		right:10px;
+	}
+	
+	.season-display.winter i {
+		color: blue;
+	}
+	
+	.season-display.summer i {
+		color: red;
+	}
+	
+	.season-display{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100vh;
+	}
+	
+	.winter{
+		background-color:aliceblue;
+	}
+	.summer{
+		background-color:orange;
+	}
+before import react statement import './seasonDisplay.css';
+
+<div className={'season-display ${season}'}>
+
+11. Showing a Loading Spinner
+		material 
+		loader 
+	create a new component for loading namely Spinner.js 
+	
+	import React from 'react';
+	const Spinner = () => {
+	return (
+		<div className="ui active dimmer">
+			<div className="ui big text loader">Loading...</div>
+		</div>
+		);
+	};
+	export default Spinner;
+	
+	index.js
+	import spinner;
+	return <Spinner/> instead of return <div>Loading...
+
+12. Specifying Default Props
+	return <Spinner message="Please accept location request" />;
+	
+	spinner.js 
+	spinner =(props) =>{
+		<div>{props.message}</div>
+	}
+	
+	Spinner.defaultProps = {
+		message: 'Loading...'
+	};
+
+13. Avoiding Conditionals in Render
+	create helper method renderContent()  and write all conditional block here and call the method in render()
+	 renderContent(){
+	 // all if else block 
+	 }
+	 render() {
+         return(
+            <div className="border red">
+                {this.renderContent()}
+            </div>
+         )
+		 
+14. Breather and Review 
+		walk through over all
+15. Coding Exercise 4 : Class-Based Components
+16. Exercise Solutions - Class - Based Components
+17. Coding Exercise 5 : Updating Components with State
+18. Updating Components with State

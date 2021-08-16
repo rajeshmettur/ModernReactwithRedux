@@ -1,0 +1,160 @@
+Section 3:- Communication with Props (1 Hour 24 min)
+-------------------------------------
+1. Three Tenets of Components
+	Component Nesting  -> A component can be shown inside of another 
+	Component Reusability -> We want to make components that can be easily reused through out application.
+	Component Configuration -> We should be able to configure the component when it is created.
+
+2. Application Overview
+	Create a new Comments component where we can reuse for multiple comments. Eg:- Comment 1, Comment 2, Comment 3
+	it contains 
+	UserImage Username Date Time  Eg:- 
+			  UserComments
+	create a new react project for components
+	
+	delete existing app.js, index.js and all..
+	create a new index.js 
+	
+	import React from 'react';
+	import ReactDOM from 'react-dom';
+	
+	const App = () => {
+	return (
+	<div>Hi there!</div>
+	)}
+	
+	ReactDOM.render(
+	<App/>, 
+	document.querySelector('#root')
+	)
+	
+	
+3. Getting Some Free Styling
+
+	https://semantic-ui.com
+	semantic ui cdn 
+	copy semantic.min.css & semantic.min.js in index.html
+	<link rel="stylesheet" href="cdn.semantic.min.css"/>
+	search for comments in left panel
+	
+4. Naive Component Approach
+	return (
+		<div className = "ui container comments">
+			<div className = "comment">
+				<a href="/" className="avator">
+					<img alt="avator"/>
+				</a>
+				<div className = "content">
+					<a href="/" className="author">
+					Sam
+					</a>
+					
+					<div className = "metadata">
+						<span className ="date">Today at 6:00 PM </span>
+					</div>
+					<div className ="text">
+						Nice blog post!
+					</div>
+				</div>
+			</div>
+		</div>
+	)
+5. Specifying Images in JSX
+	faker js ->github Marak/ faker.js
+	npm install --save faker 
+	once install 
+	import faker from 'faker'
+	change image src attribute = {faker.image.avatar()} and run
+	
+6. Duplicating a Single Component
+	copy comments section and paste 2 to acheive three comments 
+	but its not good pratice. 
+7. Extracting JSX to New Components
+		
+		Creating a Reusable, Configure Component 
+			1. Identify the JSX that appers to be duplicated
+			2. What is the purpose of that block of JSX? Think of a descriptive name for what it does 
+			3. Create a new file to house this new component - it should have the same name as the component 
+			4. Create a new component in the new file, paste the JSX into it.
+			5. Make the new component configurable by using React's props system.
+	
+	Create a new file CommentDetail.js 
+	import React and cut paste the duplicate comment <div className ="comment">...</div> and move to CommentDetail.js
+	
+8. Component Nesting
+	use export statement and import statement 
+	export default CommentDetail in CommentDetail.js 
+	
+	index.js 
+	import CommentDetail from './CommentDetail' 
+	and remove duplicated comments and call <CommentDetail/>
+	
+9. React's Props Systems
+	System for passing data from a parent component to a child component
+	Goal is to customize or configure  a child component 
+	
+	APP  -> Props -> Alex, Jane, Sam
+	
+10. Passing and Receiving Props
+	index.js
+		<CommentDetail author="Sam" />
+		<CommentDetail author="Alex" />
+		<CommentDetail author="Jane" />
+	
+	CommentDetail.js
+	Const CommentDetail = props => {
+	console.log(props);
+	<a href="/">{props.author}</a>
+	}
+	
+11. Passing Multiple Props
+	index.js
+	        <CommentDetail author ="Sam" timeAgo="Today at 4:45PM" comment = "Nice Blog!" avatar={faker.image.avatar()}/>
+            <CommentDetail author ="Jane" timeAgo="Today at 2:20AM" comment = "Whats App" avatar={faker.image.avatar()}/>
+            <CommentDetail author ="Alex" timeAgo="Yesterday at 7:20PM" comment = "Hello" avatar={faker.image.avatar()}/>
+	
+	CommentDetail.js
+	 return (
+   <div className="comment">
+        <a href="/" className="avatar">
+            <img alt="avatar" src={ props.avatar }/>
+        </a>
+        <div className="content">
+            <a href="/" className="author">{props.author}</a>
+                <div className="metadata">
+                    <span className="date">{props.timeAgo}</span>
+                </div>
+                <div className="text">
+                    {props.comment}
+                </div>
+        </div>
+    </div>
+	
+12. Passing Props - Solutions 
+	add avatar and comment pratice sections 
+	
+13. Component Reuse
+		Approval Card  - contains outer round box and approve, reject button inside nest commentdetail component.
+		
+14. Implementing an Approval Card
+	create a new approvalcard.js and copy semantic ui card html and paste.
+	call approvalcard in index.js file 
+
+15. Showing Custom Children
+	use props.children 
+	<approvalcard><commentdetail></commondetail></approvalcard>
+	
+16. Component Reuse
+		copy approvalcard and do it for other 2 comments
+		
+17. Exercise - Props 
+
+18. Coding Exercise 2: Test Your Knowledge: Props 
+
+19. Props Exercise Solution
+
+20. Exercise - Children
+
+21. Coding Exercise 3: Test Your Knowledge: Children Through Props 
+
+22. Children Exercise Solution

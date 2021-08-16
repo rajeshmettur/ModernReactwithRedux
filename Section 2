@@ -1,0 +1,63 @@
+Section 2:- Building Content with JSX (33 Min)
+---------------------------------------
+1. What is JSX? - Babel converting JSX to ES5 where every browser understand and support. 
+https://babeljs.io/ ->  Try it out and write some JSX code and see how babel converts to js html.
+
+2. Converting HTML to JS
+	JSX:-
+		Special dialect of JS (Its not HTML!)
+		Browsers dont understand JSX Code! We write JSX then run tools to turn it into normal JS.
+		Very Similar in form and function to HTML with a couple differences.
+		return (
+		<div>
+			<label class="label" for="name">Enter name:</label>
+			<input type="text" id="name"/>
+			<button style="background-color:blue;color:white">Submit</button>
+		</div>
+		);	
+	When you compile, you get nasty error message.
+	The 'style' prop expects a mapping from style properties to values, not a string.
+
+3. Inline Styling with JSX
+	JSX vs HTML:-
+	Adding custom styling to an element uses different syntax
+		HTML :- <button style ="background-color:red;"></button>
+		JSX :- <button style={{backgroundColor:'red'}}></div>
+		The first or outer curlybrace '{' indicates the we want to reference javascript variable inside jsx,
+		the second { indicates we want to reference javascript object. 
+
+4. Converting Styling to JSX Format
+		<button style={{ backgroundColor: 'blue', color:'white' }}>Submit</button>
+		
+5. Class Vs ClassName
+	Adding a class to an element uses different syntax
+	<label class="label" for="name">Enter name:</label> 
+	Change to className is to avoid collusion with Class App. so use className
+	<label className="label" for="name">Enter name:</label>
+	
+6. Referencing JS Variable in JSX
+		JSX can reference JS variables.
+	Add javascript variable  
+	const buttonText = 'Click Me!';
+	<button> {buttonText} </button>
+	Also create function 
+	function getButtonText(){
+		return 'Click on Me!'
+	}
+	<button >{getButtonText()}</button>	
+
+7. Values JSX Cant show
+	const buttonText = { text : 'Click Me'};
+	throws error, objects are not valid as a React child
+	 use {buttonText.text}
+
+8. Finding Forbidden Property Names
+	run app, use developer tools and see error 'Did you mean htmlFor'. 
+	like class and className, use htmlFor instead for attribute and run app.
+	
+9. Exercise Introduction
+	Test yourself
+
+10. Coding Exercise 1: Test Your Knowledge: JSX Interpolation
+
+11. JSX Exercise Solution

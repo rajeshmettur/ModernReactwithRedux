@@ -1,0 +1,73 @@
+Section 5:- State in React Components (39 Min)
+-------------------------------------
+1. The Rules of State
+	Only usable with class components
+	You will confue props with state 
+	State is a JS object that contains data relevant to a components
+	Updating state on a component causes the component to (almost) instantly render 
+	State must be initialized when a component is created
+	State can only be updated using the function setState 
+
+2. Initializing State Through Constructors
+	constructor(props){
+	  super(props);
+	  this.state = { lat: null };
+	}
+3. Updating State Properties
+	render(){
+		return <div>Latitude : {this.state.lat}</div>;
+	}
+	
+	move window.navigator.geolocation.getCurrentPosition(
+	position => {
+	this.setState({ lat: position.coords.latitude});
+	},
+	err => console.log(err)
+	)
+	into constructor 
+	
+4. App LifeCycle Walkthrough
+	JS file loaded by browser
+	Instance of App Component is created
+	App Components 'constructor' function gets called
+	State object is created and assigned to the this.state property
+	We call geolocation service
+	React calls the components render method
+	App returns JSX gets rendered to page as HTML 
+		...
+	We get result of geolocation
+	We update our state object with a call to this.setState
+	React sees that we updated the state of a component 
+	React calls our 'render' method a second time 
+	Render method returns some (updated) JSX 
+	React takes that JSX and updates content on the screen 
+	
+5. Handling Errors Gracefully
+	this.state = { lat: null, errorMessage: ''};
+	err = > {
+		this.setState({ errorMessage: err.message });
+	}
+	
+	render(){
+	return(
+	<div>
+	Latitude : {this.state.lat}
+	<br/>
+	Error : {this.state.errorMessage}
+	</div>
+	)
+	}
+
+6. Conditionally Rendering Content
+	Have latitude & No error Message -> Show latitude
+	No latitude & Have error Message -> Show error
+	No latitude & No error Message -> Show loading 
+	
+	  if(this.state.lat && !this.state.errorMessage){
+           return <div> Latitude : { this.state.lat }</div>;
+       }
+       if(this.state.errorMessage && !this.state.lat){
+            return <div>Error: {this.state.errorMessage}</div>;
+       }
+
+       return <div>Loading...</div>;

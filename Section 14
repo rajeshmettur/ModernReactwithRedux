@@ -1,0 +1,104 @@
+PostList.js
+
+import React from 'react';
+import { connect } from 'react-redux';
+import { fetchPosts } from '../actions';
+class PostList extends React.Component{
+componenetDidMount(){
+this.props.fetchPosts();
+}
+render(){
+	return <div>Post List </div>;
+}
+}
+
+export default connect(null, {fetchPosts})(PostList);
+
+App.js
+import PostList from './PostList';
+const App = () => {
+return (
+<div className = "ui container"> 
+<PostList/>
+</div>
+);
+}
+
+export default App;
+
+
+
+actions
+index.js
+
+import jsonPlaceholder from '../apis/jsonPlaceholder'
+export const fetchPosts =() => {
+	return {
+		type  : 'FETCH_POSTS',
+		payload : response
+	};
+}
+
+
+import {createStore, applyMiddleware} from 'redux'
+import thunk from 'redux-thunk';
+
+const store = createStore(reducers, applyMiddleware(thunk));
+
+<Provider store ={store}>
+
+
+export default (state = [], action) => {
+	switch(action.type){
+		case 'FETCH_POSTS' :
+			return action.payload;
+		default:
+			return state;
+	}
+}
+
+PostList.js
+const mapStateToProps = (state) => {
+	return { posts : state.posts };
+}
+
+export default connect(
+	mapStateToProps,
+	{ fetchPosts }) (PostList);
+)
+
+
+renderList(){
+	return this.props.posts.map(post => {
+		return (
+			<div className ="item" key={post.id}> 
+				<i className ="large middle aligned icon user"/>
+				<div className="content">
+					<div className = "description">
+						<h2>{post.title}</h2>
+						<p>{post.body}</p>
+					</div>
+				</div>
+			</div>
+		);
+	});
+}
+
+180. Displaying Users
+
+
+usersReducer.js
+export default(state =[], action) =>{
+	switch(action.type){
+		case 'FETCH_USER':
+			return [...state,action.payload];
+		default :
+			return state;
+	}
+}
+
+const mapStateToProps = (state, ownprops) => {
+	return { users: state.users.find(user => user.id === ownprops.userId)};
+};
+
+const { user } = this.props;

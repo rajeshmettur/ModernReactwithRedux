@@ -1,0 +1,17 @@
+Safe State Updates in Reducers:-
+
+											Bad 							Good
+
+Removing an element from an array   -      state.pop();                     state.filter(element => element !== 'hi')
+
+Adding an element to an array       -      state.push('hi');                [...state, 'hi']
+
+Replacing an element in an array    -      state[0] = 'hi'                  state.map(el => el === 'hi' ? 'bye' : el)
+
+Updating a property in an object    -      state.name = 'Sam'               {..state, name : 'Sam'}
+
+Adding a property to an object      -      state.age = 30                   {...state, age : 30}
+
+Removing a property from an object  -      delete state.age                 {...state, age:undefined}
+                                                                            -.omit(state,'age')
+
